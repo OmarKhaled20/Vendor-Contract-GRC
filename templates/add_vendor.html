@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="card shadow-sm">
+  <div class="card-body">
+    <h5>Add Vendor</h5>
+    <form method="post" enctype="multipart/form-data">
+      <div class="mb-3">
+        <label class="form-label">Name</label>
+        <input name="name" required class="form-control">
+      </div>
+      <div class="mb-3">
+        <label class="form-label">Contact</label>
+        <input name="contact" class="form-control">
+      </div>
+      <div class="mb-3 row">
+        <div class="col"><label class="form-label">ISO27001 expiry</label><input name="iso_expiry" type="date" class="form-control"></div>
+        <div class="col"><label class="form-label">PCI-DSS expiry</label><input name="pci_expiry" type="date" class="form-control"></div>
+      </div>
+      <div class="mb-3">
+        <label class="form-label">Upload Certificate</label>
+        <input name="cert_file" type="file" class="form-control">
+      </div>
+      <div class="mb-3 row">
+        <div class="col"><label class="form-label">Past incidents</label><input name="past_incidents" type="number" class="form-control" value="0"></div>
+        <div class="col"><label class="form-label">Financial stability (1-10)</label><input name="financial_stability" type="number" class="form-control" value="5" min="1" max="10"></div>
+      </div>
+      <button class="btn btn-success">Save Vendor</button>
+    </form>
+  </div>
+</div>
+{% endblock %}

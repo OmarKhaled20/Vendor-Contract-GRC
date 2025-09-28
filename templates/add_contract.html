@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="card shadow-sm">
+  <div class="card-body">
+    <h5>Add Contract</h5>
+    <form method="post" enctype="multipart/form-data">
+      <div class="mb-3">
+        <label class="form-label">Vendor</label>
+        <select name="vendor_id" class="form-select">
+          {% for v in vendors %}<option value="{{ v.id }}">{{ v.name }}</option>{% endfor %}
+        </select>
+      </div>
+      <div class="mb-3"><label class="form-label">Title</label><input name="title" class="form-control" required></div>
+      <div class="mb-3"><label class="form-label">Expiry</label><input name="expiry" type="date" class="form-control"></div>
+      <div class="form-check"><input class="form-check-input" type="checkbox" name="is_compliant" id="is_compliant"><label class="form-check-label" for="is_compliant">Compliant</label></div>
+      <hr>
+      <h6>Clauses (check if present)</h6>
+      <div class="form-check"><input class="form-check-input" type="checkbox" name="has_sla" id="has_sla"><label class="form-check-label" for="has_sla">SLA</label></div>
+      <div class="form-check"><input class="form-check-input" type="checkbox" name="has_nda" id="has_nda"><label class="form-check-label" for="has_nda">NDA</label></div>
+      <div class="form-check"><input class="form-check-input" type="checkbox" name="has_data_protection" id="has_data_protection"><label class="form-check-label" for="has_data_protection">Data Protection Clause</label></div>
+      <div class="form-check"><input class="form-check-input" type="checkbox" name="has_compliance_requirement" id="has_compliance_requirement"><label class="form-check-label" for="has_compliance_requirement">Compliance Requirement</label></div>
+      <div class="form-check"><input class="form-check-input" type="checkbox" name="has_auto_renewal" id="has_auto_renewal"><label class="form-check-label" for="has_auto_renewal">Auto-Renewal Clause</label></div>
+      <div class="form-check"><input class="form-check-input" type="checkbox" name="has_termination_for_breach" id="has_termination_for_breach"><label class="form-check-label" for="has_termination_for_breach">Termination for Breach Clause</label></div>
+      <div class="form-check"><input class="form-check-input" type="checkbox" name="has_penalty_clause" id="has_penalty_clause"><label class="form-check-label" for="has_penalty_clause">Penalty Clause</label></div>
+      <div class="form-check"><input class="form-check-input" type="checkbox" name="has_audit_rights" id="has_audit_rights"><label class="form-check-label" for="has_audit_rights">Audit Rights Clause</label></div>
+      <hr>
+      <div class="mb-3"><label class="form-label">Upload Contract Document</label><input name="contract_file" type="file" class="form-control"></div>
+      <button class="btn btn-primary">Save Contract</button>
+    </form>
+  </div>
+</div>
+{% endblock %}

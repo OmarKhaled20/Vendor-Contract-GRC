@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="card shadow-sm">
+  <div class="card-body">
+    <h5>Vendor: {{ vendor.name }}</h5>
+    <p class="text-muted">Contact: {{ vendor.contact }} • Created: {{ vendor.created_at }}</p>
+    <div class="mb-3">
+      <h6>Risk Snapshot</h6>
+      <p>Score: <strong>{{ score }}</strong> — Classification: <strong>{{ classification }}</strong></p>
+      <div class="progress mb-2" style="height:14px;">
+        <div class="progress-bar {% if score>60 %}bg-danger{% elif score>30 %}bg-warning{% else %}bg-success{% endif %}" role="progressbar" style="width: {{ score }}%;">{{ score }}%</div>
+      </div>
+    </div>
+    {% if files_meta.cert_file %}
+      <p>Certificate file: <a href="{{ url_for('uploaded_file', filename=files_meta.cert_file) }}">{{ files_meta.cert_file }}</a></p>
+    {% endif %}
+    <hr>
+    <h6>Contracts</h6>
+    <ul class="list-group">
+      {% for c in contracts %}
+        <li class="list-group-item d-flex justify-content-between align-items-center">
+          <div>
+            <strong>{{ c.title }}</strong><br><small class="text-muted">Expiry: {{ c.expiry_date or 'N/A' }}</small><br>
+            <small>Clauses: SLA={{ 'Y' if c.has_sla else 'N' }}, NDA={{ 'Y' if c.has_nda else 'N' }}, DataProt={{ 'Y' if c.has_data_protection else 'N' }}</small>
+          </div>
+          <div>
+            {% if c.contract_file %}
+              <a class="btn btn-sm btn-outline-secondary" href="{{ url_for('uploaded_file', filename=c.contract_file) }}">File</a>
+            {% else %}
+              <span class="badge bg-secondary">No file</span>
+            {% endif %}
+          </div>
+        </li>
+      {% else %}
+        <li class="list-group-item">No contracts</li>
+      {% endfor %}
+    </ul>
+    <a class="btn btn-link mt-3" href="{{ url_for('index') }}">Back</a>
+  </div>
+</div>
+{% endblock %}

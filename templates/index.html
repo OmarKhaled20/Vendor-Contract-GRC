@@ -1,0 +1,72 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="row mb-4">
+  <div class="col-md-8">
+    <div class="card shadow-sm">
+      <div class="card-body">
+        <h5 class="card-title">Overview</h5>
+        <div class="row">
+          <div class="col-sm-6">
+            <div class="p-3 bg-white border rounded">
+              <h6>Total Vendors</h6>
+              <h3>{{ metrics.total_vendors }}</h3>
+            </div>
+          </div>
+          <div class="col-sm-6">
+            <div class="p-3 bg-white border rounded">
+              <h6>Total Contracts</h6>
+              <h3>{{ metrics.total_contracts }}</h3>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card mt-3 shadow-sm">
+      <div class="card-body">
+        <h5>Recent Contracts</h5>
+        <ul class="list-group">
+          {% for c in contracts %}
+            <li class="list-group-item d-flex justify-content-between align-items-center">
+              <div>
+                <strong>{{ c.title }}</strong> <br>
+                <small class="text-muted">Vendor: {{ c.vendor.name }} • Expiry: {{ c.expiry_date or 'N/A' }}</small>
+              </div>
+              <div>
+                {% if c.contract_file %}
+                  <a class="btn btn-sm btn-outline-secondary" href="{{ url_for('uploaded_file', filename=c.contract_file) }}">File</a>
+                {% else %}
+                  <span class="badge bg-secondary">No file</span>
+                {% endif %}
+              </div>
+            </li>
+          {% else %}
+            <li class="list-group-item">No contracts yet.</li>
+          {% endfor %}
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-md-4">
+    <div class="card shadow-sm">
+      <div class="card-body">
+        <h5>Vendors</h5>
+        <ul class="list-group">
+          {% for v in vendors %}
+            <li class="list-group-item d-flex justify-content-between align-items-center">
+              <div>
+                <strong>{{ v.name }}</strong><br>
+                <small class="text-muted">Incidents: {{ v.past_incidents }} • Fin: {{ v.financial_stability }}</small>
+              </div>
+              <a class="btn btn-sm btn-outline-info" href="{{ url_for('vendor_detail', vid=v.id) }}">Open</a>
+            </li>
+          {% else %}
+            <li class="list-group-item">No vendors yet.</li>
+          {% endfor %}
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
